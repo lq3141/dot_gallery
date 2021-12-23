@@ -1,0 +1,79 @@
+digraph {
+  tooltip="Graph Tooltip"
+  rankdir="LR"
+  newrank=true
+  compound=true
+  nodesep=0.1
+
+  subgraph cluster_tx_lane{
+      graph [label="";]
+      tx_n1 [shape="rect"];tx_n2;
+      tx_n1 -> tx_n2
+      tx_n2 -> tx_d_n1 [style="dotted"]
+      # cluster_d1 and cluster_d2 are dummy
+      # these two dummya subgraph is to match with subgraph rx
+      # because same hiearchy maintain the margin are same,
+      # so the outline of cluster_tx_lane and cluster_rx_lane
+      # are perfectly aligned.
+      subgraph cluster_d1 {
+        style=invis
+        subgraph cluster_d2 {
+          style=dotted
+          tx_d_n1 [label="uuuuu", style=dotted,shape=rect]
+        }
+      }
+  }
+  
+  subgraph cluster_rx_lane{
+      label=""
+      subgraph cluster_rx{
+        label="rx"
+        style="invis"
+
+        subgraph cluster_a {
+          label=""
+          tooltip="Cluster Tooltip"
+          style="dashed"
+          Node1 [tooltip="Node1 Tooltip", 
+                 label="UUI", 
+                 shape="triangle",
+                 orientation=90,
+                 height=0.8,
+                 fontsize=12]
+          Node2 [shape="rect", label="xxxxx"]
+          Node1 -> Node2 [label="." tooltip="Edge Tooltip"]
+        }
+        subgraph cluster_b {
+          label=""
+          tooltip="Cluster Tooltip"
+          style="dashed"
+          Node3 [tooltip="Node1 Tooltip", 
+                 label="CTL", 
+                 shape="triangle", 
+                 orientation=90, 
+                 height=0.8, 
+                 fontsize=12]
+          Node4 [shape="rect"]
+          Node3 -> Node4 [label="." tooltip="Edge Tooltip"]
+        }
+      }
+  
+      subgraph cluster_node5{
+        Node51 [label="", shape="rect", height=0.5, style="dotted"]
+        Node5c [label="node5", shape="rect", height=0.4, style="dotted", color=white]
+        Node52 [label="",shape="rect", height=0.5, style="invis"]
+        Node51 -> Node1 [ltail=cluster_node5]
+        Node52 -> Node3 [ltail=cluster_node5]
+        # newrank: align node5
+        {rank=same;Node51;Node5c;Node52}
+      }
+ 
+      node6 [shape="rect", fixedsize=true, height=1.840]
+      node6 -> Node5c [lhead=cluster_node5]
+  }
+
+  # newrank: global control alignament between subgraph
+  {rank=same;tx_d_n1;Node4}
+  {rank=same;tx_n1;node6}
+  {rank=same;Node51;tx_n2}
+}

@@ -1,0 +1,27 @@
+digraph {
+  # newrank let us align node cross cluster
+  # read newrank help for detail
+  # it look row attribute for node is deprecated, since
+  # it's not in help document. Therefore, use method below
+  # to align node into same rank even in cluster
+  newrank=true
+  compound=true
+
+  subgraph cluster_tx{
+      graph [label="xx"]
+      tx_n1 [shape="rect";];
+      tx_n2;
+      tx_d_n1 [style=dotted,shape=rect,width=1]
+      tx_d_n2 [shape=rect,fixedsize=true,width=1.255]
+      tx_n1 -> tx_n2 [penwidth=3; style=dashed]
+      tx_n2 -> tx_d_n1 [style="dotted"]
+      tx_d_n1->tx_d_n2 []
+  }
+  
+  node6 [shape="rect", fixedsize=true, height=1.840]
+  node6 -> Node5c
+
+  {rank=same;tx_d_n1;Node5c}
+  {rank=same;tx_n1;node6}
+
+}

@@ -1,0 +1,50 @@
+digraph {
+  tooltip="Graph Tooltip"
+  rankdir="LR"
+  compound=true
+  nodesep=0.1
+
+  # lm: line model
+  lm_lrx0 [style=invis]
+  lm_lrx0 -> ltx0 [lhead=cluster_ltx0]
+  lm_ltx0 [style=invis]
+  lm_ltx0 -> lrx0 [lhead=cluster_lrx0]
+  subgraph cluster_chip {
+    subgraph cluster_ltx0 {
+      margin="1,1"
+      ltx0 [shape=rect, style=dotted, color=white, width=2]
+      ltx00[style=invis]
+      #ltx01[style=invis]
+      ltx0->ltx00 [style=invis]
+      {rank=same;ltx0;ltx00}
+    }
+    
+    hrx0 [shape=rect, style=dotted, width=2]
+    hrx1 [shape=rect, style=dotted, width=2]
+
+    ltx0  -> hrx0 [dir=back, ltail=cluster_ltx0]
+    ltx00 -> hrx1 [dir=back, ltail=cluster_ltx0]
+    
+    subgraph cluster_lrx0 {
+      margin="1,1"
+      lrx0 [shape=rect, style=dotted, color=white, width=2]
+      lrx00[style=invis]
+      #ltx01[style=invis]
+      lrx0->lrx00 [style=invis]
+      {rank=same;lrx0;lrx00}
+    }
+        
+    htx0 [shape=rect, style=dotted, width=2]
+    htx1 [shape=rect, style=dotted, width=2]
+    
+    lrx0  -> htx0 [ltail=cluster_lrx0]
+    lrx00 -> htx1 [ltail=cluster_lrx0]
+  }
+  
+  # hm: host model
+  hm_htx0 [style=invis]
+  hrx0 -> hm_htx0 [dir=back]
+  
+  hm_hrx0 [style=invis]
+  htx0 -> hm_hrx0
+}
